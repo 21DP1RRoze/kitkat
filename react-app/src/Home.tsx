@@ -1,20 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavBar from './Navbar.tsx';
-import axios from "axios";
+import axios from 'axios';
 
-const Home =  () => {
-
+const Home = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const navigate = useNavigate();
 
     useEffect (() => {
-        axios.get('/user', {
+        const response = axios.get('/user', {
         }).then(response => {
             console.log(response.data);
+            setIsAuthenticated(true);
         }).catch(error => {
-           navigate("/login"); 
+            setIsAuthenticated(false);
+            return null;
         })
-    }, [])
+
+        // const fetchData = async () => {
+        //     await axios.get('/user');
+        // }
+        // fetchData();
+    }, []);
+
+    if(!isAuthenticated) {
+        return null;
+    }
 
     return (
         <div className="home">

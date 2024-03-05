@@ -24,10 +24,6 @@ const LogIn = () => {
         }).then(async (response) => {
             const token = response.data.token;
             localStorage.setItem("loginToken", token);
-            await axios.get('/user', {
-            }).then(response => {
-                console.log(response.data);
-            })
             navigate("/");
         })
     }
